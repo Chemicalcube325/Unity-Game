@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 9008402109136475540}
   - component: {fileID: 6258498797397125388}
   - component: {fileID: 1253169060150855699}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathSoundEffect: {fileID: 1253169060150855699}
+  damage: 0
 --- !u!82 &9008402109136475540
 AudioSource:
   m_ObjectHideFlags: 0
