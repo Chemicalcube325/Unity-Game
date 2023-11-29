@@ -16,16 +16,20 @@ public class DataManager : MonoBehaviour
     {
         get
         {
-            if (instance == null)
+            if (instance != null)
             {
+                
+
                 instance = new GameObject("DataManager").AddComponent<DataManager>();
 
+                
                 if (instance == null)
                 {
                     instance = new GameObject("DataManager").AddComponent<DataManager>();
                 }
 
                 DontDestroyOnLoad(instance.gameObject);
+                
 
             }
 
@@ -35,6 +39,18 @@ public class DataManager : MonoBehaviour
 
     private void Awake()
     {
+        // Check's if theres already an instance in the scene
+        if (instance != null && instance != this)
+        {
+            // Destroy the duplicate instance
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+
+        DontDestroyOnLoad (gameObject);
+
         GameObject highScoresObject = GameObject.FindWithTag("HighScores");
 
         if (highScoresObject != null)
@@ -64,16 +80,23 @@ public class DataManager : MonoBehaviour
             Debug.LogWarning("outputText not assigned during Awake. Please check the Unity Editor.");
         }
 
-        DontDestroyOnLoad (gameObject);
      
     }
 
     // Merge-sort method for sorting the persistent list.
     public void MergeSortPersistentList()
     {
-        Debug.Log("MergeSortPersistentList");
-        instance.persistentList = MergeSort(instance.persistentList);
-        UpdateOutputText(); // Call the method to update the TMP Text
+        if (Instance != null)
+        {
+            Debug.Log("MergeSortPersistentList");
+            instance.persistentList = MergeSort(instance.persistentList);
+            UpdateOutputText(); // Call the method to update the TMP Text
+        }
+        else 
+        {
+            Debug.LogError("DataManger Instance is Null in MergeSortPersistentLIst");
+        }
+
     }
 
     private List<int> MergeSort(List<int> unsortedList)

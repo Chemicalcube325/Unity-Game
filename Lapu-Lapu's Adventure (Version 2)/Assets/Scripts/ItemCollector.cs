@@ -7,16 +7,28 @@ public class ItemCollector : MonoBehaviour
 {
     private int cherries = 0;
 
-    [SerializeField] private TextMeshProUGUI cherriesText;
+    private TextMeshProUGUI cherriesText;
 
     [SerializeField] private AudioSource pickUpSound;
 
-    public DataManager dataManager = DataManager.Instance;
-
+    private DataManager dataManager;
 
     public void Awake()
     {
-        
+        GameObject textObject = GameObject.Find("Cherries Text");
+        GameObject dataManagerObject = GameObject.Find("Datamanger");
+
+        if (textObject != null ) 
+        {
+            cherriesText = textObject.GetComponent<TextMeshProUGUI>();
+        }
+
+        dataManager = GameObject.FindObjectOfType<DataManager>();
+
+        if (dataManagerObject != null ) 
+        {
+            Debug.Log("Datamanager not found in the secne.");
+        }
     }
 
 
@@ -29,6 +41,7 @@ public class ItemCollector : MonoBehaviour
             cherries++;
             cherriesText.text = "Cherries: " + cherries;
             dataManager.AddToPersistentList(cherries);
+            dataManager.MergeSortPersistentList();
         }
     }
 }
