@@ -14,12 +14,20 @@ public class Health : MonoBehaviour
     public float currentHealth { get; private set; }
     private Animator anim;
     private bool dead;
+    private float restartDelay = 3f; // Adjust this value as needed
+
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim1 = GetComponent<Animator>();
     }
+
+    public bool IsDead()
+    {
+        return dead;
+    }
+
     private void Awake()
     {
         currentHealth = startingHealth;
@@ -39,7 +47,7 @@ public class Health : MonoBehaviour
             if (!dead)
             {
                 dead = true;
-                Debug.Log("Player died!"); 
+                Debug.Log("Player died!");
                 Die();
             }
         }
@@ -48,13 +56,26 @@ public class Health : MonoBehaviour
     private void Die()
     {
         deathSoundEffect.Play();
-        rb.bodyType = RigidbodyType2D.Static;
+        dead = true; // Mark the player as dead
+
+        // Disable the PlayerMovement script
+        PlayerMovement playerMovement = GetComponent<PlayerMovement>();
+        if (playerMovement != null)
+        {
+            playerMovement.enabled = false;
+        }
+
+        // Disable other components or actions related to movement, jumping, dashing, etc.
+        // If there are other relevant components, disable them here.
+
         anim.SetTrigger("death");
+        Invoke("Restartlevel", restartDelay);
     }
+
+
 
     private void Restartlevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
-

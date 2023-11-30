@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private TrailRenderer tr;
 
     [SerializeField] private LayerMask jumpableGround;
-    
+
     private float dirX = 0f;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 14f;
@@ -36,8 +36,8 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        coll = GetComponent<BoxCollider2D>();  
-        sprite = GetComponent<SpriteRenderer>();    
+        coll = GetComponent<BoxCollider2D>();
+        sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
     }
 
@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
         // This is how we move the character, by getting the X axis and adding velocity to it
         dirX = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
-        
+
         // GetButtowDown uses Unity's built in controller, you don't need to hard-wire the controls in-script
         if (Input.GetButtonDown("Jump") && isGrounded())
         {
