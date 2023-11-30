@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class HealthEnemy : MonoBehaviour
 {
@@ -13,6 +12,7 @@ public class HealthEnemy : MonoBehaviour
         currentHealth = startingHealth;
         anim = GetComponent<Animator>();
     }
+
     public void TakeDamage(float _damage)
     {
         currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
@@ -26,13 +26,36 @@ public class HealthEnemy : MonoBehaviour
             if (!dead)
             {
                 anim.SetTrigger("die");
-                GetComponent<PlayerMovement>().enabled = false;
+
+                // Disable collider on current GameObject
+                Collider2D ownCollider = GetComponent<Collider2D>();
+                if (ownCollider != null)
+                {
+                    ownCollider.enabled = false;
+                }
+
+                // Disable collider on parent GameObject
+                Collider2D parentCollider = transform.parent.GetComponent<Collider2D>();
+                if (parentCollider != null)
+                {
+                    parentCollider.enabled = false;
+                }
+
+                // Disable specific enemy components
+                EnemyPatrol enemyPatrol = GetComponentInParent<EnemyPatrol>();
+                if (enemyPatrol != null)
+                {
+                    enemyPatrol.enabled = false;
+                }
+
+                MeleeEnemy meleeEnemy = GetComponent<MeleeEnemy>();
+                if (meleeEnemy != null)
+                {
+                    meleeEnemy.enabled = false;
+                }
+
                 dead = true;
-
             }
-
         }
     }
-
 }
-
