@@ -18,11 +18,8 @@ public class DataManager : MonoBehaviour
         {
             if (instance != null)
             {
-                
+                instance = FindObjectOfType<DataManager>();
 
-                instance = new GameObject("DataManager").AddComponent<DataManager>();
-
-                
                 if (instance == null)
                 {
                     instance = new GameObject("DataManager").AddComponent<DataManager>();
@@ -129,7 +126,7 @@ public class DataManager : MonoBehaviour
         while (leftIndex < left.Count && rightIndex < right.Count)
         {
             // Compare elements and add the smaller one to the result.
-            if (left[leftIndex] < right[rightIndex])
+            if (left[leftIndex] > right[rightIndex])
             {
                 result.Add(left[leftIndex]);
                 leftIndex++;

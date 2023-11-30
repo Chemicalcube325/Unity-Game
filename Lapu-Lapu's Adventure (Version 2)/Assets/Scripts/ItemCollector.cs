@@ -40,6 +40,10 @@ public class ItemCollector : MonoBehaviour
             Destroy(collision.gameObject);
             cherries++;
             cherriesText.text = "Cherries: " + cherries;
+        }
+
+        if (collision.gameObject.CompareTag("Checkpoint"))
+        {
             dataManager.AddToPersistentList(cherries);
             dataManager.MergeSortPersistentList();
         }
