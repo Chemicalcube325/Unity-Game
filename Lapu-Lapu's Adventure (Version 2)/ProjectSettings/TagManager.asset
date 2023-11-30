@@ -8,6 +8,7 @@ TagManager:
   - Trap
   - Enemy
   - HighScores
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
